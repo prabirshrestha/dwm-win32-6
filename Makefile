@@ -3,10 +3,10 @@
 
 include config.mk
 
-SRC = drw.c dwm.c util.c
+SRC = drw.c dwm-win32.c util.c
 OBJ = ${SRC:.c=.o}
 
-all: options dwm
+all: options dwm-win32
 
 options:
 	@echo dwm build options:
@@ -24,13 +24,13 @@ config.h:
 	@echo creating $@ from config.def.h
 	@cp config.def.h $@
 
-dwm: ${OBJ}
+dwm-win32: ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
 	@echo cleaning
-	@rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
+	@rm -f dwm-win32 ${OBJ} dwm-${VERSION}.tar.gz
 
 dist: clean
 	@echo creating dist tarball
