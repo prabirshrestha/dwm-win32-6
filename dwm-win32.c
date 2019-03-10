@@ -769,9 +769,10 @@ cleanup(void) {
 	XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
 #endif
 #if USE_WINAPI
-	HWND hwnd = FindWindow("Progman", "Program Manager");
-	if (hwnd)
-		setvisibility(hwnd, TRUE);
+    HWND hwnd;
+	/* HWND hwnd = FindWindow("Progman", "Program Manager"); */
+	/* if (hwnd) */
+	/* 	setvisibility(hwnd, TRUE); */
 
 	hwnd = FindWindow("Shell_TrayWnd", NULL);
 	if (hwnd)
