@@ -2015,7 +2015,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		default:
 			if (msg == shellhookid) { /* Handle the shell hook message */
 				Client *c = getclient((HWND)lParam);
-				switch (wParam) {
+				switch (wParam & 0x7fff) {
 					/* The first two events are also trigger if windows
 					 * are being hidden or shown because of a tag
 					 * switch, therefore we ignore them in this case.
