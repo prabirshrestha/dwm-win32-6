@@ -50,7 +50,7 @@
 #if USE_XLIB
 static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*";
 #elif USE_WINAPI
-static const char font[]            = "System";
+static const char font[]            = "Small Font";
 #endif
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
