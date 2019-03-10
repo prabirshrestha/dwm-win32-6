@@ -777,6 +777,8 @@ cleanup(void) {
 	hwnd = FindWindow("Shell_TrayWnd", NULL);
 	if (hwnd)
 		setvisibility(hwnd, TRUE);
+
+    DestroyWindow(dwmhwnd);
 #endif
 }
 
