@@ -1439,7 +1439,6 @@ manage(Window w, XWindowAttributes *wa) {
 	}
 #elif USE_WINAPI
 	c->mon = selmon;
-	applyrules(c);
 
 	static WINDOWPLACEMENT wp = {
 		.length = sizeof(WINDOWPLACEMENT),
@@ -1455,6 +1454,7 @@ manage(Window w, XWindowAttributes *wa) {
 	c->isfloating = (wi.dwStyle & WS_POPUP) || 
 		(!(wi.dwStyle & WS_MINIMIZEBOX) && !(wi.dwStyle & WS_MAXIMIZEBOX));
 
+	applyrules(c);
 //	debug(" window style: %d\n", wi.dwStyle);
 //	debug("     minimize: %d\n", wi.dwStyle & WS_MINIMIZEBOX);
 //	debug("     maximize: %d\n", wi.dwStyle & WS_MAXIMIZEBOX);

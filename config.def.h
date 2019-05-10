@@ -77,6 +77,7 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
 	{ "MozillaWindowClass",  NULL,       NULL,       1 << 1,       False,       -1 },
 	{ "Chrome_WidgetWin_1",  NULL,       "- Google Chrome",       1 << 1,       False,       -1 },
+	{ "Chrome_WidgetWin_1",  NULL,       "Cerebro",       0,       True,       -1 },
 };
 
 /* layout(s) */
