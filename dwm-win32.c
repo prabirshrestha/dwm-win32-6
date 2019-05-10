@@ -2292,6 +2292,8 @@ setup(void) {
 setup(HINSTANCE hInstance) {
 	RECT wa;
 	HWND hwnd = FindWindow("Shell_TrayWnd", NULL);
+    if (hwnd)
+		setvisibility(hwnd, showexploreronstart);
 #endif
 
 	/* clean up any zombies immediately */
