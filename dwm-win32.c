@@ -298,6 +298,7 @@ static void setup(HINSTANCE hInstance);
 #if USE_WINAPI
 void setupbar(HINSTANCE hInstance);
 #endif
+static void showclientclassname(const Arg *arg); 
 static void showhide(Client *c);
 static void sigchld(int unused);
 static void spawn(const Arg *arg);
@@ -2427,7 +2428,10 @@ setup(HINSTANCE hInstance) {
 	focus(NULL);
 }
 
-
+void
+showclientclassname(const Arg *arg) {
+	MessageBox(NULL, getclientclassname(GetForegroundWindow()), "Window class", MB_OK);
+}
 
 void
 showhide(Client *c) {
