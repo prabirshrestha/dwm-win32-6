@@ -528,7 +528,7 @@ applyrules(Client *c) {
 		&& (!r->instance || strstr(instance, r->instance)))
 		{
 			c->isfloating = r->isfloating;
-			c->tags |= r->tags;
+			c->tags |= r->tags & TAGMASK ? r->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
 			for(m = mons; m && m->num != r->monitor; m = m->next);
 			if(m)
 				c->mon = m;
@@ -541,8 +541,8 @@ applyrules(Client *c) {
 		XFree(ch.res_name);
 #elif USE_WINAPI
 #endif
-	c->tags = c->mon->tagset[c->mon->seltags];
-	c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
+	if(!c->tags)
+		c->tags = c->mon->tagset[c->mon->seltags];
 }
 
 Bool

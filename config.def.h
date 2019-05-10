@@ -22,6 +22,7 @@
 #define XK_d 'D'
 #define XK_h 'H'
 #define XK_l 'L'
+#define XK_z 'Z'
 #define XK_Tab VK_TAB
 #define XK_c 'C'
 #define XK_t 'T'
@@ -74,7 +75,8 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       False,       -1 },
+	{ "MozillaWindowClass",  NULL,       NULL,       1 << 1,       False,       -1 },
+	{ "Chrome_WidgetWin_1",  NULL,       "- Google Chrome",       1 << 1,       False,       -1 },
 };
 
 /* layout(s) */
@@ -118,6 +120,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,                       XK_z,      showclientclassname,  {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
