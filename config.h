@@ -50,7 +50,7 @@
 #if USE_XLIB
 static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*";
 #elif USE_WINAPI
-static const char font[]            = "Consolas";
+static const char font[]            = "Fira Code";
 #endif
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
@@ -72,10 +72,9 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title                 tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,                 0,            True,        -1 },
-	{ "Firefox",  NULL,       NULL,                 1 << 8,       False,       -1 },
-    { "Chrome_WidgetWin_1", NULL,   NULL,           0,       False,       -1 },
+	/* class      instance    title       tags mask     isfloating   monitor */
+	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 8,       False,       -1 },
 };
 
 /* layout(s) */
@@ -121,7 +120,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      showclientclassname,    {0} },
+	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
