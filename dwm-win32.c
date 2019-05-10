@@ -2571,6 +2571,7 @@ togglefloating(const Arg *arg) {
 
 void
 toggletag(const Arg *arg) {
+    debug("toggle tag");
 	unsigned int newtags;
 
 	if(!selmon->sel)
@@ -2579,6 +2580,7 @@ toggletag(const Arg *arg) {
 	if(newtags) {
 		selmon->sel->tags = newtags;
 		focus(NULL);
+        updatebar();
 		arrange(selmon);
 	}
 }
@@ -2590,6 +2592,7 @@ toggleview(const Arg *arg) {
 	if(newtagset) {
 		selmon->tagset[selmon->seltags] = newtagset;
 		focus(NULL);
+        updatebar();
 		arrange(selmon);
 	}
 }
