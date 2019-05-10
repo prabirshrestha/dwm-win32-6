@@ -2793,6 +2793,26 @@ updateclientlist() {
 Bool
 updategeom(void) {
 	Bool dirty = False;
+
+#if USE_WINAPI
+	RECT wa;
+	HWND hwnd = FindWindow("Shell_TrayWnd", NULL);
+	if (hwnd && IsWindowVisible(hwnd)) {
+		SystemParametersInfo(SPI_GETWORKAREA, 0, &wa, 0);
+		sx = wa.left;
+		sy = wa.top;
+		sw = wa.right - wa.left;
+		sh = wa.bottom - wa.top;
+	} else {
+		sx = GetSystemMetrics(SM_XVIRTUALSCREEN);
+		sy = GetSystemMetrics(SM_YVIRTUALSCREEN);
+		sw = GetSystemMetrics(SM_CXVIRTUALSCREEN);
+		sh = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+	}
+
+	bh = 20; /* XXX: fixed value */
+#endif
+
 #if USE_XLIB
 #ifdef XINERAMA
 	if(XineramaIsActive(dpy)) {
@@ -2859,8 +2879,10 @@ updategeom(void) {
 	{
 		if(!mons)
 			mons = createmon();
-		if(mons->mw != sw || mons->mh != sh) {
+		if(mons->mx != sx || mons->my != sy || mons->mw != sw || mons->mh != sh) {
 			dirty = True;
+			mons->mx = sx;
+			mons->my = sy;
 			mons->mw = mons->ww = sw;
 			mons->mh = mons->wh = sh;
 			updatebarpos(mons);
