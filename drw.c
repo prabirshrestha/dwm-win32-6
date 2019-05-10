@@ -120,7 +120,7 @@ drw_font_create(Display *dpy, const char *fontname, HWND canvas) {
 		font->descent = font->xfont->descent;
 	}
 #elif USE_WINAPI
-	if ((font->font = CreateFont(10,0,0,0,0,0,0,0,0,0,0,0,0,TEXT(fontname))))
+	if ((font->font = CreateFont(12,0,0,0,0,0,0,0,0,0,0,0,0,TEXT(fontname))))
 	{
 		HDC hdc = GetDC(canvas);
 		SelectObject(hdc, font->font);
