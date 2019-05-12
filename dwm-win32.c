@@ -47,6 +47,7 @@
 #elif USE_WINAPI
 #include <windows.h>
 #include <winuser.h>
+#include <dwmapi.h>
 #include <shellapi.h>
 #include <stdlib.h>
 #define NAME					"dwm-win32" 	/* Used for window name/class */
@@ -1928,6 +1929,18 @@ getclient(HWND hwnd) {
 	return NULL;
 }
 
+#if USE_WINAPI
+static bool
+IsInvisibleWin10BackgroundAppWindow(HWND hWnd) {
+	int CloakedVal;
+	HRESULT hRes = DwmGetWindowAttribute(hWnd, DWMWA_CLOAKED, &CloakedVal, sizeof(CloakedVal));
+	if (hRes != S_OK) {
+		CloakedVal = 0;
+	}
+	return CloakedVal ? true : false;
+}
+#endif
+
 bool
 ismanageable(HWND hwnd){
 	if (getclient(hwnd))
@@ -1941,29 +1954,41 @@ ismanageable(HWND hwnd){
 	bool istool = exstyle & WS_EX_TOOLWINDOW;
 	bool isapp = exstyle & WS_EX_APPWINDOW;
 
+	if(IsInvisibleWin10BackgroundAppWindow(hwnd)) {
+		// ignore all win apps for now
+		debug("  IsInvisibleWin10BackgroundAppWindow: true\n");
+		debug("  manage: false\n");
+		return false;
+	}
+
 	if (pok && !getclient(parent))
 		manage(parent, NULL);
 
-//	debug("ismanageable: %s\n", getclienttitle(hwnd));
-//	debug("    hwnd: %d\n", hwnd);
-//	debug("  window: %d\n", IsWindow(hwnd));
-//	debug(" visible: %d\n", IsWindowVisible(hwnd));
-//	debug("  parent: %d\n", parent);
-//	debug("parentok: %d\n", pok);
-//	debug("   owner: %d\n", owner);
-//	debug(" toolwin: %d\n", istool);
-//	debug("  appwin: %d\n", isapp);
+	/* debug("ismanageable: %s\n", getclienttitle(hwnd)); */
+	/* debug("    hwnd: %d\n", hwnd); */
+	/* debug("  window: %d\n", IsWindow(hwnd)); */
+	/* debug(" visible: %d\n", IsWindowVisible(hwnd)); */
+	/* debug("  parent: %d\n", parent); */
+	/* debug("parentok: %d\n", pok); */
+	/* debug("   owner: %d\n", owner); */
+	/* debug(" toolwin: %d\n", istool); */
+	/* debug("  appwin: %d\n", isapp); */
+
+	if (hwnd == 0) {
+		/* debug("  manage: false\n"); */
+		return false;
+	}
 
 	/* XXX: should we do this? */
 	if (GetWindowTextLength(hwnd) == 0) {
-//		debug("   title: NULL\n");
-//		debug("  manage: false\n");
+		/* debug("   title: NULL\n"); */
+		/* debug("  manage: false\n"); */
 		return false;
 	}
 
 	if (style & WS_DISABLED) {
-//		debug("disabled: true\n");
-//		debug("  manage: false\n");
+		/* debug("disabled: true\n"); */
+		/* debug("  manage: false\n"); */
 		return false;
 	}
 
@@ -1987,15 +2012,15 @@ ismanageable(HWND hwnd){
 
 	if ((parent == 0 && IsWindowVisible(hwnd)) || pok) {
 		if ((!istool && parent == 0) || (istool && pok)) {
-//			debug("  manage: true\n");
+			/* debug("  manage: true\n"); */
 			return true;
 		}
 		if (isapp && parent != 0) {
-//		    debug("  manage: true\n");
+		    /* debug("  manage: true\n"); */
 			return true;
 		}
 	}
-//	debug("  manage: false\n");
+	/* debug("  manage: false\n"); */
 	return false;
 }
 

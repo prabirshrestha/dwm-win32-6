@@ -30,6 +30,7 @@ LDFLAGS  = -s ${LIBS}
 
 # Windows (Cygwin)
 LIBPATH = -L/usr/lib/w32api
+LIBS = -ldwmapi
 CFLAGS   = -std=c99 -pedantic -w -Wno-deprecated-declarations -Os -DUSE_WINAPI -DUSE_CYGWIN ${INCS} ${CPPFLAGS}
 LDFLAGS  = -s -mwindows $(LIBPATH) ${LIBS}
 
