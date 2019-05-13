@@ -68,6 +68,7 @@ drw_free(Drw *drw) {
 #if USE_XLIB
 	XFreePixmap(drw->dpy, drw->drawable);
 	XFreeGC(drw->dpy, drw->gc);
+	free(drw);
 #elif USE_WINAPI
 	if (drw->font->font)
 		DeleteObject(drw->font->font);
@@ -76,8 +77,8 @@ drw_free(Drw *drw) {
 		DeleteObject(drw->hbmp);
 		DeleteDC(drw->drawable);
 	}
+	DeleteObject(drw);
 #endif
-	free(drw);
 }
 
 Fnt *
@@ -143,11 +144,11 @@ drw_font_free(Display *dpy, Fnt *font) {
 		XFreeFontSet(dpy, font->set);
 	else
 		XFreeFont(dpy, font->xfont);
+	free(font);
 #elif USE_WINAPI
 	if (font->font)
 		DeleteObject(font->font);
 #endif
-	free(font);
 }
 
 Clr *
@@ -179,7 +180,11 @@ drw_clr_create(Drw *drw, const char *clrname) {
 void
 drw_clr_free(Clr *clr) {
 	if(clr)
+#if USE_XLIB
 		free(clr);
+#elif USE_WINAPI
+		DeleteObject(clr);
+#endif
 }
 
 void
