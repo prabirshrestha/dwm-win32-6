@@ -76,7 +76,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
 	{ "MozillaWindowClass",  NULL,       NULL,       1 << 1,       False,       -1 },
-	{ "Chrome_WidgetWin_1",  NULL,       "- Google Chrome",       1 << 1,       False,       -1 },
+	{ "Chrome_WidgetWin_1",  NULL,       "- Google Chrome",       0,       False,       -1 },
 	{ "Chrome_WidgetWin_1",  NULL,       "Cerebro",       0,       True,       -1 },
 	{ "Microsoft-Windows-SnipperToolbar",  NULL,       "Snipping Tool",       0,       True,       -1 },
 };
