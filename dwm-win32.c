@@ -1124,7 +1124,6 @@ expose(XEvent *e) {
 
 void
 focus(Client *c) {
-#if USE_XLIB
 	if(!c || !ISVISIBLE(c))
 		for(c = selmon->stack; c && !ISVISIBLE(c); c = c->snext);
 	/* was if(selmon->sel) */
@@ -1138,21 +1137,22 @@ focus(Client *c) {
 		detachstack(c);
 		attachstack(c);
 		grabbuttons(c, True);
+#if USE_XLIB
 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel].border->rgb);
+#elif USE_WINAPI
+        if (selmon->sel && selmon->sel->hwnd)
+            SetForegroundWindow(selmon->sel->hwnd);
+#endif
 		setfocus(c);
 	}
 	else {
+#if USE_XLIB
 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
 		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
+#endif
 	}
 	selmon->sel = c;
 	drawbars();
-#elif USE_WINAPI
-	setselected(c);
-	/* if (selmon->sel) */
-	/* 	SetForegroundWindow(selmon->sel->hwnd); */
-#endif
-	
 }
 
 #if USE_XLIB
