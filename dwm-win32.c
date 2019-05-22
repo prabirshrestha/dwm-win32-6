@@ -322,6 +322,7 @@ static void unmapnotify(XEvent *e);
 static Bool updategeom(void);
 #if USE_WINAPI
 static void updatebar(void);
+static void updateresolution(void);
 #endif
 static void updatebarpos(Monitor *m);
 static void updatebars(void);
@@ -2038,6 +2039,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_HOTKEY:
 			keypress(wParam);
 			break;
+        case WM_DISPLAYCHANGE:
+			updateresolution();
+			break;
 		default:
 			if (msg == shellhookid) { /* Handle the shell hook message */
 				Client *c = getclient((HWND)lParam);
@@ -2725,6 +2729,16 @@ updatebar(void) {
 	//FIXME
 	SetWindowPos(barhwnd, selmon->showbar ? HWND_TOPMOST : HWND_NOTOPMOST, 0, m->by, m->ww, bh, (selmon->showbar ? SWP_SHOWWINDOW : SWP_HIDEWINDOW) | SWP_NOACTIVATE | SWP_NOSENDCHANGING);
 	}
+}
+
+void
+updateresolution(void) {
+#if USE_WINAPI
+	updategeom();
+	updatebarpos(selmon);
+	updatebar();
+	arrange(selmon);
+#endif
 }
 
 void
