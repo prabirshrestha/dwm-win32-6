@@ -1,5 +1,8 @@
 dwm-win32 is a port of the well known X11 window manager dwm to Microsoft Windows.
 
+# Archived
+**Please use [dwm-win32](https://github.com/prabirshrestha/dwm-win32) instead.**
+
 # Description
 
 dwm is a dynamic window manager for Microsoft Windows. It manages windows in tiled, 
